@@ -1,8 +1,8 @@
  # EXPERIMENT--06-INTERFACING-DIGITAL-SENSOR-ON-RASPBERRY-PI-DEVELOPMENT-BOARD-
-### NAME:MIDHUN S
-### ROLL NO:212224230158
+### NAME:Prabanjan R
+### ROLL NO:212224230198
 ### DEPARTMENT :AIDS
-### DATE:12/05/2025
+### DATE:15/05/2025
 
 ### AIM
 interface the DHT11 digital temperature and humidity sensor with a Raspberry Pi development board and display real-time data.

@@ -79,16 +79,28 @@ open thonny python and writhe the python script as shown below
 
 ### PYTHON SCRIPT 
  ~~~
-sudo apt update
-sudo apt full-upgrade
-sudo apt install python3-pip
-sudo pip3 install --upgrade setuptools
-sudo reboot
-Then install and run a script developed by Adafruit :
-
-sudo pip3 install --upgrade adafruit-python-shell
-wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/raspi-blinka.py
-sudo python3 raspi-blinka.py
+import time
+import board
+import adafruit_dht
+import psutil
+//// first check if a libgpiod process is running. 
+for proc in psutil.process_iter():
+    if proc.name() == 'libgpiod_pulsein' or proc.name() == 'libgpiod_pulsei':
+        proc.kill()
+sensor = adafruit_dht.DHT11(board.D23)
+while True:
+    try:
+        temp = sensor.temperature
+        humidity = sensor.humidity
+        print("Temperature: {}*C   Humidity: {}% ".format(temp, humidity))
+    except RuntimeError as error:
+        print(error.args[0])
+        time.sleep(2.0)
+        continue
+    except Exception as error:
+        sensor.exit()
+        raise error
+    time.sleep(2.0)`
 ~~~
 ## Output:
 ## 1. Circuit Diagram:
@@ -96,6 +108,7 @@ sudo python3 raspi-blinka.py
 ![440403955-01a0f21b-7955-4d37-9fab-db32653c7c6f](https://github.com/user-attachments/assets/360a88a0-f2aa-45ea-8d3c-7b378ea604a8)
 
 ### 2. Sensor Readings:
+
 ![440404306-67fe827f-b743-4d4a-a17c-703e5a2658f1](https://github.com/user-attachments/assets/1bdcc7ef-5242-4a4c-9ff7-ab7d0ead4733)    
 ## RESULT:
 The DHT11 temperature and humidity sensor was successfully interfaced with the Raspberry Pi, and real-time data was retrieved and displayed.
